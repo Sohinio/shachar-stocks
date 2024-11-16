@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעקב מניות והתרעות</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container, .graph-container {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>מעקב מניות והתרעות בזמן אמת</h1>
+    <div class="container">
+        <!-- טופס להרשמה -->
+        <div class="form-container">
+            <h2>הירשם להתראות</h2>
+            <form id="subscriptionForm">
+                <label for="phone">מספר טלפון:</label>
+                <input type="text" id="phone" name="phone" placeholder="הכנס את מספר הטלפון שלך" required>
+                
+                <label for="stockName">שם מניה:</label>
+                <input type="text" id="stockName" name="stockName" placeholder="הכנס את שם המניה" required>
+                
+                <button type="submit">הירשם</button>
+            </form>
+        </div>
+
+        <!-- בחירת מניה -->
+        <div class="form-container">
+            <h2>בחר מניה לצפייה בגרף</h2>
+            <select id="stockSelector">
+                <option value="NASDAQ:AAPL">Apple (AAPL)</option>
+                <option value="NASDAQ:GOOG">Google (GOOG)</option>
+                <option value="NASDAQ:MSFT">Microsoft (MSFT)</option>
+                <option value="NASDAQ:TSLA">Tesla (TSLA)</option>
+                <option value="NASDAQ:AMZN">Amazon (AMZN)</option>
+                <option value="NASDAQ:AFRM">Affirm (AFRM)</option>
+                <option value="NASDAQ:NVDA">NVIDIA (NVDA)</option>
+                <option value="NASDAQ:COIN">Coinbase (COIN)</option>
+                <option value="NYSE:UBER">Uber (UBER)</option>
+            </select>
+            <button onclick="loadGraph()">הצג גרף</button>
+        </div>
+
+        <!-- גרפים -->
+        <div class="graph-container">
+            <h2>גרף מניה נבחרת</h2>
+            <div id="tradingview_graph">
+                <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_a&symbol=NASDAQ:AAPL&interval=D&hidesidetoolbar=1&theme=dark" id="stockGraph"></iframe>
+            </div>
+        </div>
+
+        <div class="graph-container">
+            <h2>גרפים של מניות מובילות</h2>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_b&symbol=NASDAQ:GOOG&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_c&symbol=NASDAQ:MSFT&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_d&symbol=NASDAQ:AFRM&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_e&symbol=NASDAQ:NVDA&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_f&symbol=NASDAQ:COIN&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_g&symbol=NYSE:UBER&interval=D&hidesidetoolbar=1&theme=dark"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // פונקציה לשינוי הגרף לפי המניה שנבחרה
+        function loadGraph() {
+            const stockSelector = document.getElementById('stockSelector');
+            const stockSymbol = stockSelector.value;
+            const iframe = document.getElementById('stockGraph');
+            iframe.src = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview_a&symbol=${stockSymbol}&interval=D&hidesidetoolbar=1&theme=dark`;
+        }
+
+        // פונקציה לטופס ההרשמה
+        document.getElementById('subscriptionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("הרשמה בוצעה בהצלחה!");
+        });
+    </script>
+</body>
+</html>
